@@ -1,3 +1,4 @@
 __pycache__/
 *.pyc
 env_check.png
+results/poster/_check_*

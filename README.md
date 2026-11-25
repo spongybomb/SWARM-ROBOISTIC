@@ -78,3 +78,18 @@ The analysis scripts in this repository were written with AI assistance (Hermes 
 ## Contact
 
 Tianyi Zhang, School of Data Science, Lingnan University. tianyizhang23@ln.hk
+
+## Static experiments for the poster
+
+`static_experiments.py` runs three frozen-topology experiments. Results go to `results/static_experiments.json`. `poster_figures.py` then draws them to `results/poster/`. The graph model is the same as in the sanity check: 200 robots in a 20 m × 20 m area, at most 8 mutual nearest-neighbour links, 20 seeds, and injection at the robot nearest (0, 0).
+
+| Experiment | What varies | Result |
+|---|---|---|
+| E1 radio-range sweep | R = 1.5–5 m | 0/20 networks connected at 2 m (mean reach 67%) and 16/20 at 3 m. Above 3.5 m the 8-link cap saturates, so the graphs are identical. |
+| Bound check | 45 distinct connected networks, R = 2.5–3.5 m | measured rounds = eccentricity ≤ diameter ≤ bound in 45/45 networks; the bound is 2.4–4.7× the measured value |
+| E2 flag vs consensus | same networks and source; consensus with β = 1/9, threshold 0.95 | flag: median 16 rounds; consensus: median 4,468 rounds. Consensus rounds match ln(20)/(β·λ(L_g)) within 9%. The check λ(L_g) ≤ d_s/(N−1) held for all networks. |
+| E3 node loss, 15% | none / random / regional (nearest to (15, 15) m), no re-linking | connected networks out of 16: 16 / 11 / 4 |
+
+The consensus rounds are computed from the eigendecomposition of the grounded Laplacian. On two networks they were checked against direct iteration and matched exactly.
+
+All of these are static snapshots: robots do not move and no connectivity controller is applied.
