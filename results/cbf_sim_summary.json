@@ -1,0 +1,92 @@
+{
+ "open|None": {
+  "n": 20,
+  "received": 90.475,
+  "all_received": 3,
+  "coverage": 95.83749999999999,
+  "rounds_med": 16.0,
+  "bound_med": null,
+  "viol": 0,
+  "backtrack_frac": 0.0
+ },
+ "open|0.05": {
+  "n": 20,
+  "received": 100.0,
+  "all_received": 20,
+  "coverage": 56.45,
+  "rounds_med": 11.5,
+  "bound_med": 65.0,
+  "viol": 0,
+  "backtrack_frac": 0.11366666666666667
+ },
+ "open|0.2": {
+  "n": 20,
+  "received": 100.0,
+  "all_received": 20,
+  "coverage": 37.56250000000001,
+  "rounds_med": 8.0,
+  "bound_med": 45.0,
+  "viol": 0,
+  "backtrack_frac": 0.39166666666666666
+ },
+ "corridor|None": {
+  "n": 20,
+  "received": 55.025,
+  "all_received": 2,
+  "coverage": 61.083333333333336,
+  "rounds_med": 22.5,
+  "bound_med": null,
+  "viol": 0,
+  "backtrack_frac": 0.0
+ },
+ "corridor|0.05": {
+  "n": 20,
+  "received": 100.0,
+  "all_received": 20,
+  "coverage": 18.011904761904763,
+  "rounds_med": 6.0,
+  "bound_med": 111.0,
+  "viol": 0,
+  "backtrack_frac": 0.0
+ },
+ "corridor|0.2": {
+  "n": 20,
+  "received": 100.0,
+  "all_received": 20,
+  "coverage": 17.511904761904763,
+  "rounds_med": 5.0,
+  "bound_med": 67.0,
+  "viol": 0,
+  "backtrack_frac": 0.006416666666666667
+ },
+ "rooms|None": {
+  "n": 20,
+  "received": 33.85000000000001,
+  "all_received": 0,
+  "coverage": 68.96666666666667,
+  "rounds_med": null,
+  "bound_med": null,
+  "viol": 0,
+  "backtrack_frac": 0.0
+ },
+ "rooms|0.05": {
+  "n": 20,
+  "received": 100.0,
+  "all_received": 20,
+  "coverage": 57.49444444444445,
+  "rounds_med": 19.5,
+  "bound_med": 87.0,
+  "viol": 0,
+  "backtrack_frac": 0.19458333333333333
+ },
+ "rooms|0.2": {
+  "n": 20,
+  "received": 100.0,
+  "all_received": 20,
+  "coverage": 46.95555555555556,
+  "rounds_med": 16.5,
+  "bound_med": 48.0,
+  "viol": 0,
+  "backtrack_frac": 0.3219166666666667
+ }
+}

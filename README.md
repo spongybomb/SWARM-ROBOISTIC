@@ -93,3 +93,43 @@ Tianyi Zhang, School of Data Science, Lingnan University. tianyizhang23@ln.hk
 The consensus rounds are computed from the eigendecomposition of the grounded Laplacian. On two networks they were checked against direct iteration and matched exactly.
 
 All of these are static snapshots: robots do not move and no connectivity controller is applied.
+
+## Moving simulation: three disaster scenes, with and without a connectivity floor
+
+`cbf_sim.py` is a reference implementation of the mechanism in §4 of the paper. `test_cbf_sim.py` checks three things:
+
+- the analytic λ₂ gradient against finite differences;
+- the per-robot QP against brute-force grid search;
+- the spectral bound on 300 random weighted graphs.
+
+`poster_sim_figures.py` draws the results.
+
+**Setup.** 200 single-integrator robots start in a 6 m × 6 m entrance area and search for 60 s. The radio range is 2 m, and edge weights decay smoothly with distance. At 60 s the commander's evacuation order is injected at the robot nearest (0, 0). The order is then forwarded as a flag, one hop per control step, while the robots keep moving. There are three scenes, all geometric abstractions:
+
+- a collapsed-building void, 20 × 20 m;
+- a collapsed tunnel, 60 × 6.7 m;
+- separated survivor pockets: three rooms in a 30 × 30 m area.
+
+Each scene is run with no floor, λ_min = 0.05 and λ_min = 0.2. Each setting uses 20 seeds, and the start positions and targets are the same with and without the floor.
+
+**Simplifications.**
+- λ₂ and the Fiedler vector are computed exactly and centrally, so A3 is assumed.
+- There is no 8-link cap. The bound is therefore evaluated with the weighted λ₂ and the λ_N of the support graph, which is valid because L_w ≼ L_support.
+- The constraint is allocated as b_i ∝ ‖g_i‖².
+- The floor is enforced with a 15% margin.
+- A discrete-time safety step halves the step size whenever the next step would push λ₂ below the floor. This was needed because λ₂ became repeated: the minimum spectral gap was 5e-7, which is the regime that A2 warns about.
+- There is no collision guarantee.
+
+**Results.**
+
+| Scene | Every robot got the order: no floor / 0.05 / 0.2 | Mean share of robots reached, no floor | Area searched: no floor / 0.05 / 0.2 |
+|---|---|---|---|
+| Building void | 3/20 / 20/20 / 20/20 | 90% | 96% / 56% / 38% |
+| Collapsed tunnel | 2/20 / 20/20 / 20/20 | 55% | 61% / 18% / 18% |
+| Survivor pockets | 0/20 / 20/20 / 20/20 | 34% | 69% / 57% / 47% |
+
+- In the 120 runs with a floor, λ₂ never fell below the floor.
+- The measured override rounds never exceeded the spectral bound at injection time.
+- In 308 agent-steps (out of 7.2 million) the local QP was infeasible. These steps were logged and handled on a best-effort basis.
+
+Run with `python cbf_sim.py 20 12` (20 seeds, 12 worker processes; about 6 minutes on 24 cores). Each run is appended to `results/cbf_sim_runs.jsonl`, so an interrupted job can be resumed.
